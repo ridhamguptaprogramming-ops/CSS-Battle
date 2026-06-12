@@ -1,0 +1,1181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="TECHMATE 2026 - CSS Battle Competition. Code Smart. Build Fast. Battle with CSS. A futuristic frontend design challenge for college students.">
+<meta name="keywords" content="CSS Battle, TECHMATE 2026, coding competition, frontend, tech fest, college event">
+<meta property="og:title" content="TECHMATE 2026 - CSS Battle">
+<meta property="og:description" content="Code Smart. Build Fast. Battle with CSS.">
+<title>TECHMATE 2026 | CSS Battle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cyan: #00E5FF;
+    --purple: #7B61FF;
+    --bg: #0B0F19;
+    --bg2: #0F1420;
+    --card: rgba(255,255,255,0.06);
+    --card-border: rgba(255,255,255,0.10);
+    --text: #FFFFFF;
+    --muted: rgba(255,255,255,0.55);
+    --red: #FF4D6D;
+    --green: #00FF9D;
+    --glow-cyan: 0 0 30px rgba(0,229,255,0.35);
+    --glow-purple: 0 0 30px rgba(123,97,255,0.35);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Space Grotesk', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--purple); border-radius: 3px; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 5%;
+    background: rgba(11,15,25,0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--card-border);
+  }
+  .nav-logo {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.1rem; font-weight: 700;
+    background: linear-gradient(90deg, var(--cyan), var(--purple));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    color: var(--muted); text-decoration: none;
+    font-size: .875rem; font-weight: 500;
+    transition: color .2s;
+  }
+  .nav-links a:hover { color: var(--cyan); }
+  .nav-cta {
+    padding: .5rem 1.25rem; border-radius: 6px;
+    background: linear-gradient(135deg, var(--cyan), var(--purple));
+    color: #000 !important; font-weight: 700 !important;
+    font-size: .8rem !important; text-transform: uppercase; letter-spacing: .05em;
+    transition: transform .2s, box-shadow .2s !important;
+  }
+  .nav-cta:hover { transform: translateY(-2px); box-shadow: var(--glow-cyan) !important; }
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+  .hamburger span { width: 24px; height: 2px; background: var(--cyan); border-radius: 2px; transition: .3s; }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+    padding: 7rem 5% 4rem;
+  }
+  .hero-canvas {
+    position: absolute; inset: 0; z-index: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(123,97,255,.18) 0%, transparent 70%),
+                radial-gradient(ellipse 60% 40% at 80% 20%, rgba(0,229,255,.12) 0%, transparent 60%),
+                var(--bg);
+  }
+  .grid-bg {
+    position: absolute; inset: 0; z-index: 0;
+    background-image:
+      linear-gradient(rgba(0,229,255,.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,229,255,.05) 1px, transparent 1px);
+    background-size: 50px 50px;
+    mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+  }
+  .floating-code {
+    position: absolute; inset: 0; z-index: 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .75rem; color: rgba(0,229,255,.12);
+    overflow: hidden; user-select: none; pointer-events: none;
+  }
+  .code-line {
+    position: absolute; white-space: nowrap;
+    animation: floatCode linear infinite;
+  }
+  @keyframes floatCode {
+    from { transform: translateY(100vh); opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    to { transform: translateY(-10vh); opacity: 0; }
+  }
+
+  .hero-content {
+    position: relative; z-index: 1;
+    text-align: center; max-width: 860px;
+  }
+  .hero-badge {
+    display: inline-block; margin-bottom: 1.5rem;
+    padding: .35rem 1rem; border-radius: 50px;
+    border: 1px solid rgba(0,229,255,.3);
+    background: rgba(0,229,255,.08);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .8rem; color: var(--cyan); letter-spacing: .1em;
+    animation: pulse-border 2.5s ease-in-out infinite;
+  }
+  @keyframes pulse-border {
+    0%,100% { border-color: rgba(0,229,255,.3); }
+    50% { border-color: rgba(0,229,255,.8); box-shadow: 0 0 16px rgba(0,229,255,.2); }
+  }
+  .hero-title {
+    font-size: clamp(3rem, 9vw, 7.5rem);
+    font-weight: 700; line-height: 1;
+    letter-spacing: -.02em;
+    background: linear-gradient(135deg, #fff 0%, var(--cyan) 45%, var(--purple) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    animation: titleReveal .8s ease both;
+  }
+  @keyframes titleReveal {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .hero-sub {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: clamp(1rem, 2.5vw, 1.5rem);
+    color: var(--cyan); margin-top: .5rem; letter-spacing: .08em;
+    animation: titleReveal .8s .15s ease both;
+  }
+  .hero-tagline {
+    font-size: clamp(1.1rem, 2.2vw, 1.35rem);
+    color: var(--muted); margin-top: 1.2rem; font-weight: 400;
+    animation: titleReveal .8s .3s ease both;
+  }
+  .hero-tagline span { color: var(--text); font-weight: 600; }
+
+  .hero-btns {
+    display: flex; gap: 1rem; justify-content: center; margin-top: 2.5rem;
+    flex-wrap: wrap;
+    animation: titleReveal .8s .45s ease both;
+  }
+  .btn-primary {
+    padding: .9rem 2.5rem; border-radius: 8px; border: none; cursor: pointer;
+    background: linear-gradient(135deg, var(--cyan), var(--purple));
+    color: #000; font-family: 'Space Grotesk', sans-serif;
+    font-size: 1rem; font-weight: 700; text-decoration: none;
+    display: inline-flex; align-items: center; gap: .5rem;
+    transition: transform .2s, box-shadow .2s;
+    box-shadow: 0 0 0 rgba(0,229,255,0);
+  }
+  .btn-primary:hover { transform: translateY(-3px); box-shadow: var(--glow-cyan); }
+  .btn-secondary {
+    padding: .9rem 2.5rem; border-radius: 8px; cursor: pointer;
+    background: transparent; border: 1.5px solid var(--card-border);
+    color: var(--text); font-family: 'Space Grotesk', sans-serif;
+    font-size: 1rem; font-weight: 600; text-decoration: none;
+    display: inline-flex; align-items: center; gap: .5rem;
+    transition: transform .2s, border-color .2s, box-shadow .2s;
+  }
+  .btn-secondary:hover { transform: translateY(-3px); border-color: var(--cyan); box-shadow: var(--glow-cyan); }
+
+  /* Countdown */
+  .countdown {
+    display: flex; gap: 1.5rem; justify-content: center; margin-top: 3rem;
+    animation: titleReveal .8s .6s ease both;
+    flex-wrap: wrap;
+  }
+  .cd-unit {
+    text-align: center; min-width: 72px;
+    background: var(--card); border: 1px solid var(--card-border);
+    border-radius: 10px; padding: 1rem .8rem;
+    backdrop-filter: blur(8px);
+  }
+  .cd-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 2.2rem; font-weight: 700;
+    background: linear-gradient(135deg, var(--cyan), var(--purple));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    line-height: 1;
+  }
+  .cd-label { font-size: .7rem; color: var(--muted); text-transform: uppercase; letter-spacing: .1em; margin-top: .3rem; }
+
+  /* ── SECTION COMMON ── */
+  section { padding: 6rem 5%; }
+  .section-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .8rem; color: var(--cyan); letter-spacing: .15em;
+    text-transform: uppercase; margin-bottom: .75rem;
+  }
+  .section-title {
+    font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 700; line-height: 1.15;
+    margin-bottom: 1rem;
+  }
+  .section-title span {
+    background: linear-gradient(90deg, var(--cyan), var(--purple));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .section-desc { color: var(--muted); max-width: 620px; font-size: 1.05rem; }
+  .centered { text-align: center; }
+  .centered .section-desc { margin: 0 auto; }
+
+  /* Glass card */
+  .glass {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    backdrop-filter: blur(10px);
+    transition: transform .25s, box-shadow .25s, border-color .25s;
+  }
+  .glass:hover { transform: translateY(-4px); border-color: rgba(0,229,255,.25); box-shadow: var(--glow-cyan); }
+
+  /* ── ABOUT ── */
+  #about { background: var(--bg2); }
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4rem;
+    align-items: center; margin-top: 3rem;
+  }
+  .about-features { display: grid; gap: 1rem; margin-top: 2rem; }
+  .feature-item {
+    display: flex; gap: 1rem; align-items: flex-start;
+    padding: 1.2rem 1.4rem;
+  }
+  .feature-icon {
+    width: 40px; height: 40px; flex-shrink: 0;
+    border-radius: 10px; display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem;
+    background: linear-gradient(135deg, rgba(0,229,255,.15), rgba(123,97,255,.15));
+    border: 1px solid rgba(0,229,255,.2);
+  }
+  .feature-text h4 { font-size: .95rem; font-weight: 600; margin-bottom: .2rem; }
+  .feature-text p { font-size: .85rem; color: var(--muted); }
+
+  .about-visual {
+    position: relative; min-height: 340px;
+    border-radius: 16px; overflow: hidden;
+    background: linear-gradient(135deg, rgba(0,229,255,.08), rgba(123,97,255,.12));
+    border: 1px solid var(--card-border);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .code-window {
+    width: 90%; background: rgba(0,0,0,.5);
+    border-radius: 10px; padding: 1.2rem;
+    border: 1px solid rgba(255,255,255,.1);
+    font-family: 'JetBrains Mono', monospace; font-size: .78rem;
+  }
+  .win-dots { display: flex; gap: 6px; margin-bottom: .8rem; }
+  .win-dots span { width: 11px; height: 11px; border-radius: 50%; }
+  .dot-r { background: #ff5f57; }
+  .dot-y { background: #febc2e; }
+  .dot-g { background: #28c840; }
+  .code-line-s { margin-bottom: .35rem; }
+  .c-sel { color: var(--cyan); }
+  .c-prop { color: #ff79c6; }
+  .c-val { color: #f1fa8c; }
+  .c-num { color: #bd93f9; }
+  .c-brace { color: var(--muted); }
+  .c-comment { color: #6272a4; }
+  .cursor { display: inline-block; width: 8px; height: 14px; background: var(--cyan); animation: blink .9s step-end infinite; vertical-align: text-bottom; }
+  @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
+
+  /* ── ELIGIBILITY ── */
+  .elig-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
+  .elig-card { padding: 2rem 1.5rem; text-align: center; }
+  .elig-card .icon { font-size: 2.5rem; margin-bottom: 1rem; display: block; }
+  .elig-card h3 { font-size: 1rem; font-weight: 600; margin-bottom: .5rem; }
+  .elig-card p { font-size: .875rem; color: var(--muted); }
+
+  /* ── FORMAT ── */
+  #format { background: var(--bg2); }
+  .rounds { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 3rem; }
+  .round-card { padding: 2.5rem; position: relative; overflow: hidden; }
+  .round-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--cyan), var(--purple));
+  }
+  .round-badge {
+    display: inline-block; padding: .3rem .8rem; border-radius: 50px;
+    font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em;
+    margin-bottom: 1.2rem;
+    background: linear-gradient(135deg, rgba(0,229,255,.15), rgba(123,97,255,.15));
+    border: 1px solid rgba(0,229,255,.3); color: var(--cyan);
+  }
+  .round-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 3.5rem; font-weight: 700; line-height: 1;
+    background: linear-gradient(135deg, var(--cyan), var(--purple));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    margin-bottom: .5rem;
+  }
+  .round-title { font-size: 1.25rem; font-weight: 600; margin-bottom: 1.5rem; }
+  .round-details { display: flex; flex-direction: column; gap: .8rem; }
+  .round-detail { display: flex; align-items: center; gap: .75rem; font-size: .9rem; }
+  .round-detail span:first-child {
+    width: 32px; height: 32px; border-radius: 8px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center; font-size: .9rem;
+    background: rgba(0,229,255,.1); border: 1px solid rgba(0,229,255,.2);
+  }
+
+  /* ── TECH ── */
+  .tech-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 3rem; }
+  .tech-group h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 1.2rem; display: flex; align-items: center; gap: .6rem; }
+  .tech-group h3 .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+  .dot-green { background: var(--green); box-shadow: 0 0 8px var(--green); }
+  .dot-red { background: var(--red); box-shadow: 0 0 8px var(--red); }
+  .tech-chips { display: flex; flex-wrap: wrap; gap: .75rem; }
+  .tech-chip {
+    padding: .5rem 1rem; border-radius: 8px;
+    font-family: 'JetBrains Mono', monospace; font-size: .82rem; font-weight: 500;
+    display: flex; align-items: center; gap: .4rem;
+  }
+  .chip-allow {
+    background: rgba(0,255,157,.07); border: 1px solid rgba(0,255,157,.25); color: var(--green);
+  }
+  .chip-deny {
+    background: rgba(255,77,109,.07); border: 1px solid rgba(255,77,109,.25); color: var(--red);
+  }
+  .chip-icon { font-size: .9rem; }
+
+  /* ── JUDGING ── */
+  #judging { background: var(--bg2); }
+  .judging-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-top: 3rem; }
+  .judge-card { padding: 2rem 1.8rem; }
+  .judge-pct {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 3rem; font-weight: 700; line-height: 1;
+  }
+  .judge-pct.c1 { color: var(--cyan); }
+  .judge-pct.c2 { color: var(--purple); }
+  .judge-pct.c3 { color: #FFB547; }
+  .judge-title { font-size: 1.05rem; font-weight: 600; margin: .5rem 0 .4rem; }
+  .judge-desc { font-size: .85rem; color: var(--muted); margin-bottom: 1.2rem; }
+  .progress-bar {
+    height: 6px; border-radius: 3px; background: rgba(255,255,255,.08);
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%; border-radius: 3px;
+    animation: fillBar 1.4s ease both;
+  }
+  @keyframes fillBar {
+    from { width: 0 !important; }
+  }
+  .fill1 { background: linear-gradient(90deg, var(--cyan), var(--purple)); }
+  .fill2 { background: linear-gradient(90deg, var(--purple), #c084fc); }
+  .fill3 { background: linear-gradient(90deg, #FFB547, #ff6b6b); }
+
+  /* ── TIMELINE ── */
+  .timeline { position: relative; max-width: 700px; margin: 4rem auto 0; padding: 0 1rem; }
+  .timeline::before {
+    content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 2px;
+    background: linear-gradient(180deg, var(--cyan), var(--purple), transparent);
+    transform: translateX(-50%);
+  }
+  .tl-item {
+    display: flex; gap: 2rem; align-items: flex-start; margin-bottom: 2.5rem;
+    position: relative;
+  }
+  .tl-item:nth-child(even) { flex-direction: row-reverse; }
+  .tl-item:nth-child(even) .tl-content { text-align: right; }
+  .tl-dot {
+    position: absolute; left: 50%; transform: translateX(-50%);
+    width: 14px; height: 14px; border-radius: 50%; flex-shrink: 0;
+    background: var(--cyan); border: 3px solid var(--bg);
+    box-shadow: 0 0 10px var(--cyan); z-index: 1; top: 4px;
+  }
+  .tl-content { width: calc(50% - 2rem); }
+  .tl-time {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .8rem; color: var(--cyan); font-weight: 700;
+    margin-bottom: .3rem; letter-spacing: .05em;
+  }
+  .tl-event { font-size: .95rem; font-weight: 600; margin-bottom: .25rem; }
+  .tl-note { font-size: .8rem; color: var(--muted); }
+
+  /* ── PRIZES ── */
+  .prizes-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2rem; margin-top: 3rem; }
+  .prize-card { padding: 2.5rem 1.8rem; text-align: center; position: relative; overflow: hidden; }
+  .prize-card.gold::before { background: linear-gradient(90deg, #FFD700, #FFA500); }
+  .prize-card.silver::before { background: linear-gradient(90deg, #C0C0C0, #a8a8a8); }
+  .prize-card.bronze::before { background: linear-gradient(90deg, #cd7f32, #a0522d); }
+  .prize-card.cert::before { background: linear-gradient(90deg, var(--cyan), var(--purple)); }
+  .prize-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+  .prize-medal { font-size: 3rem; margin-bottom: 1rem; display: block; }
+  .prize-rank { font-size: .75rem; text-transform: uppercase; letter-spacing: .12em; color: var(--muted); margin-bottom: .4rem; }
+  .prize-title { font-size: 1.3rem; font-weight: 700; margin-bottom: .5rem; }
+  .prize-amount {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.5rem; font-weight: 700;
+    background: linear-gradient(90deg, var(--cyan), var(--purple));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    margin-bottom: .5rem;
+  }
+  .prize-note { font-size: .82rem; color: var(--muted); }
+
+  /* ── FAQ ── */
+  #faq { background: var(--bg2); }
+  .faq-list { max-width: 760px; margin: 3rem auto 0; display: flex; flex-direction: column; gap: 1rem; }
+  .faq-item { border: 1px solid var(--card-border); border-radius: 12px; overflow: hidden; background: var(--card); backdrop-filter: blur(8px); }
+  .faq-q {
+    width: 100%; text-align: left; padding: 1.3rem 1.6rem;
+    background: none; border: none; color: var(--text);
+    font-family: 'Space Grotesk', sans-serif; font-size: .98rem; font-weight: 600;
+    cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+    transition: color .2s;
+  }
+  .faq-q:hover { color: var(--cyan); }
+  .faq-q::after {
+    content: '+'; font-size: 1.4rem; font-weight: 300; flex-shrink: 0;
+    color: var(--cyan); transition: transform .3s;
+  }
+  .faq-item.open .faq-q::after { transform: rotate(45deg); }
+  .faq-a {
+    max-height: 0; overflow: hidden;
+    transition: max-height .35s ease, padding .35s ease;
+    color: var(--muted); font-size: .9rem; line-height: 1.7;
+  }
+  .faq-item.open .faq-a { max-height: 300px; padding: 0 1.6rem 1.3rem; }
+
+  /* ── CONTACT ── */
+  .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 2rem; margin-top: 3rem; }
+  .contact-card { padding: 2rem; text-align: center; }
+  .contact-icon { font-size: 2.2rem; margin-bottom: 1rem; display: block; }
+  .contact-label { font-size: .75rem; text-transform: uppercase; letter-spacing: .12em; color: var(--muted); margin-bottom: .4rem; }
+  .contact-val { font-size: 1rem; font-weight: 600; }
+  .contact-val a { color: var(--cyan); text-decoration: none; }
+  .contact-val a:hover { text-decoration: underline; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #070A12;
+    border-top: 1px solid var(--card-border);
+    padding: 3rem 5% 2rem;
+    text-align: center;
+  }
+  .footer-logo {
+    font-family: 'JetBrains Mono', monospace; font-size: 1.5rem; font-weight: 700;
+    background: linear-gradient(90deg, var(--cyan), var(--purple));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    margin-bottom: .5rem;
+  }
+  .footer-tagline { color: var(--muted); font-size: .875rem; margin-bottom: 2rem; }
+  .social-links { display: flex; gap: 1rem; justify-content: center; margin-bottom: 2rem; }
+  .social-link {
+    width: 42px; height: 42px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--card); border: 1px solid var(--card-border);
+    color: var(--muted); text-decoration: none; font-size: 1.1rem;
+    transition: color .2s, border-color .2s, box-shadow .2s, transform .2s;
+  }
+  .social-link:hover { color: var(--cyan); border-color: var(--cyan); box-shadow: var(--glow-cyan); transform: translateY(-3px); }
+  .footer-copy { font-size: .8rem; color: rgba(255,255,255,.25); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .about-grid { grid-template-columns: 1fr; }
+    .about-visual { display: none; }
+    .rounds { grid-template-columns: 1fr; }
+    .tech-wrap { grid-template-columns: 1fr; }
+    .timeline::before { left: 20px; }
+    .tl-item { flex-direction: column !important; padding-left: 50px; }
+    .tl-item:nth-child(even) .tl-content { text-align: left; }
+    .tl-dot { left: 20px; }
+    .tl-content { width: 100% !important; }
+    .nav-links { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: rgba(11,15,25,.97); padding: 1.5rem 5%; gap: 1.2rem; border-bottom: 1px solid var(--card-border); }
+    .nav-links.open { display: flex; }
+    .hamburger { display: flex; }
+  }
+  @media (max-width: 540px) {
+    section { padding: 4rem 4%; }
+    .countdown { gap: .8rem; }
+    .cd-unit { min-width: 58px; padding: .75rem .6rem; }
+    .cd-num { font-size: 1.8rem; }
+  }
+
+  /* Scroll reveal */
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity .6s ease, transform .6s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  /* ── REGISTER ── */
+  #register { background: var(--bg2); }
+  .register-wrap {
+    max-width: 980px;
+    margin: 3.2rem auto 0;
+  }
+  .register-grid {
+    display: grid;
+    grid-template-columns: 1.05fr .95fr;
+    gap: 2rem;
+    align-items: start;
+  }
+  .register-card {
+    padding: 2.2rem;
+  }
+  .form-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: .8rem;
+  }
+  .form-sub {
+    color: var(--muted);
+    font-size: .92rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: .45rem;
+  }
+  .field.wide { grid-column: 1 / -1; }
+  label {
+    font-size: .8rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: .08em;
+  }
+  input, select {
+    width: 100%;
+    padding: .9rem .95rem;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,.14);
+    background: rgba(0,0,0,.25);
+    color: var(--text);
+    outline: none;
+    transition: border-color .2s, box-shadow .2s, transform .08s;
+  }
+  input::placeholder { color: rgba(255,255,255,.35); }
+  input:focus, select:focus {
+    border-color: rgba(0,229,255,.45);
+    box-shadow: var(--glow-cyan);
+  }
+  .hint {
+    color: rgba(255,255,255,.42);
+    font-size: .82rem;
+  }
+
+  .error {
+    color: rgba(255,77,109,.95);
+    font-size: .86rem;
+    display: none;
+  }
+  .field.invalid .error { display: block; }
+  .field.invalid input,
+  .field.invalid select {
+    border-color: rgba(255,77,109,.55);
+    box-shadow: 0 0 0 3px rgba(255,77,109,.12);
+  }
+
+  .consent {
+    display: flex;
+    gap: .75rem;
+    align-items: flex-start;
+    margin-top: 1.2rem;
+    padding: 1rem 1rem;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,.12);
+    background: rgba(0,0,0,.18);
+  }
+  .consent input { width: 18px; height: 18px; margin-top: 2px; }
+  .consent p {
+    color: var(--muted);
+    font-size: .9rem;
+  }
+  .form-actions {
+    margin-top: 1.4rem;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .btn-submit {
+    padding: .95rem 2.2rem;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    background: linear-gradient(135deg, var(--cyan), var(--purple));
+    color: #000;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1rem;
+    font-weight: 800;
+    transition: transform .2s, box-shadow .2s;
+    box-shadow: 0 0 0 rgba(0,229,255,0);
+  }
+  .btn-submit:hover { transform: translateY(-2px); box-shadow: var(--glow-cyan); }
+
+  .status {
+    flex: 1;
+    min-width: 240px;
+    padding: .9rem 1rem;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,.12);
+    background: rgba(0,0,0,.18);
+    color: var(--muted);
+    display: none;
+  }
+  .status.show { display: block; }
+  .status.ok {
+    color: rgba(0,255,157,.95);
+    border-color: rgba(0,255,157,.35);
+    box-shadow: 0 0 0 3px rgba(0,255,157,.10);
+  }
+  .status.bad {
+    color: rgba(255,77,109,.95);
+    border-color: rgba(255,77,109,.35);
+    box-shadow: 0 0 0 3px rgba(255,77,109,.10);
+  }
+
+  .register-side {
+    padding: 2.2rem;
+  }
+  .side-badge {
+    display: inline-block;
+    padding: .35rem .8rem;
+    border-radius: 50px;
+    border: 1px solid rgba(0,229,255,.28);
+    background: rgba(0,229,255,.08);
+    color: var(--cyan);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .82rem;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+  .side-list { display: grid; gap: 1rem; margin-top: 1.2rem; }
+  .side-item {
+    display: flex;
+    gap: .9rem;
+    align-items: flex-start;
+    padding: .95rem 1rem;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,.10);
+    background: rgba(0,0,0,.16);
+  }
+  .side-ico {
+    width: 38px; height: 38px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,229,255,.10);
+    border: 1px solid rgba(0,229,255,.20);
+    flex-shrink: 0;
+    font-size: 1.05rem;
+  }
+  .side-item h4 { font-size: .95rem; font-weight: 700; margin-bottom: .2rem; }
+  .side-item p { color: var(--muted); font-size: .86rem; line-height: 1.6; }
+
+  @media (max-width: 900px) {
+    .register-grid { grid-template-columns: 1fr; }
+    .form-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <div class="nav-logo">⚡ TECHMATE</div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#about">About</a></li>
+    <li><a href="#format">Format</a></li>
+    <li><a href="#timeline">Timeline</a></li>
+    <li><a href="#prizes">Prizes</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#register" class="nav-cta">Register</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section id="hero">
+  <div class="hero-canvas"></div>
+  <div class="grid-bg"></div>
+  <div class="floating-code" id="floatingCode"></div>
+
+  <div class="hero-content">
+    <div class="hero-badge">⚡ TECHMATE 2026 &nbsp;·&nbsp; CSS Battle Competition</div>
+    <h1 class="hero-title">TECHMATE<br>2026</h1>
+    <p class="hero-sub">// CSS Battle Competition</p>
+    <p class="hero-tagline"><span>Code Smart.</span> Build Fast. <span>Battle with CSS.</span></p>
+
+    <div class="hero-btns">
+      <a href="#contact" class="btn-primary">🚀 Register Now</a>
+      <a href="#about" class="btn-secondary">Learn More →</a>
+    </div>
+
+    <div class="countdown" id="countdown">
+      <div class="cd-unit"><div class="cd-num" id="cd-days">00</div><div class="cd-label">Days</div></div>
+      <div class="cd-unit"><div class="cd-num" id="cd-hrs">00</div><div class="cd-label">Hours</div></div>
+      <div class="cd-unit"><div class="cd-num" id="cd-min">00</div><div class="cd-label">Minutes</div></div>
+      <div class="cd-unit"><div class="cd-num" id="cd-sec">00</div><div class="cd-label">Seconds</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── ABOUT ── -->
+<section id="about">
+  <div class="about-grid">
+    <div class="reveal">
+      <p class="section-eyebrow">// what is it?</p>
+      <h2 class="section-title">The Ultimate <span>CSS Battle</span></h2>
+      <p class="section-desc">Participants recreate pixel-perfect designs using only pure HTML &amp; CSS — no JavaScript, no libraries, no shortcuts. Speed, precision, and elegance decide the winner.</p>
+
+      <div class="about-features">
+        <div class="feature-item glass">
+          <div class="feature-icon">🎨</div>
+          <div class="feature-text">
+            <h4>Creative Thinking</h4>
+            <p>Translate complex visual designs into clean, minimal CSS code.</p>
+          </div>
+        </div>
+        <div class="feature-item glass">
+          <div class="feature-icon">⚡</div>
+          <div class="feature-text">
+            <h4>Frontend Mastery</h4>
+            <p>Demonstrate deep command of selectors, properties, and layout systems.</p>
+          </div>
+        </div>
+        <div class="feature-item glass">
+          <div class="feature-icon">🔧</div>
+          <div class="feature-text">
+            <h4>Code Optimization</h4>
+            <p>Fewer characters, higher scores. Write lean, precise, expressive CSS.</p>
+          </div>
+        </div>
+        <div class="feature-item glass">
+          <div class="feature-icon">🧠</div>
+          <div class="feature-text">
+            <h4>Problem Solving</h4>
+            <p>Overcome layout puzzles under time pressure with clever solutions.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="about-visual reveal">
+      <div class="code-window">
+        <div class="win-dots">
+          <span class="dot-r"></span>
+          <span class="dot-y"></span>
+          <span class="dot-g"></span>
+        </div>
+        <div class="code-line-s"><span class="c-comment">/* TECHMATE 2026 — CSS Battle */</span></div>
+        <div class="code-line-s"></div>
+        <div class="code-line-s"><span class="c-sel">.battle-card</span> <span class="c-brace">{</span></div>
+        <div class="code-line-s">&nbsp;&nbsp;<span class="c-prop">display</span>: <span class="c-val">grid</span><span class="c-brace">;</span></div>
+        <div class="code-line-s">&nbsp;&nbsp;<span class="c-prop">background</span>: <span class="c-val">linear-gradient(</span></div>
+        <div class="code-line-s">&nbsp;&nbsp;&nbsp;&nbsp;<span class="c-num">135deg</span>, <span class="c-val">#00E5FF</span>, <span class="c-val">#7B61FF</span></div>
+        <div class="code-line-s">&nbsp;&nbsp;<span class="c-val">)</span><span class="c-brace">;</span></div>
+        <div class="code-line-s">&nbsp;&nbsp;<span class="c-prop">border-radius</span>: <span class="c-num">16px</span><span class="c-brace">;</span></div>
+        <div class="code-line-s">&nbsp;&nbsp;<span class="c-prop">box-shadow</span>: <span class="c-num">0 0 40px</span></div>
+        <div class="code-line-s">&nbsp;&nbsp;&nbsp;&nbsp;<span class="c-val">rgba</span>(<span class="c-num">0,229,255,.4</span>)<span class="c-brace">;</span></div>
+        <div class="code-line-s"><span class="c-brace">}</span></div>
+        <div class="code-line-s"></div>
+        <div class="code-line-s"><span class="c-sel">.winner</span> <span class="c-brace">{</span></div>
+        <div class="code-line-s">&nbsp;&nbsp;<span class="c-prop">color</span>: <span class="c-val">#00E5FF</span><span class="c-brace">;</span></div>
+        <div class="code-line-s">&nbsp;&nbsp;<span class="c-prop">font-weight</span>: <span class="c-num">700</span><span class="c-brace">;</span></div>
+        <div class="code-line-s"><span class="c-brace">}</span><span class="cursor"></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── ELIGIBILITY ── -->
+<section id="eligibility">
+  <div class="centered reveal">
+    <p class="section-eyebrow">// who can participate?</p>
+    <h2 class="section-title">Eligibility <span>Criteria</span></h2>
+    <p class="section-desc">Open to passionate frontend enthusiasts ready to battle it out in pure CSS.</p>
+  </div>
+  <div class="elig-grid">
+    <div class="elig-card glass reveal">
+      <span class="icon">👤</span>
+      <h3>Individual Participation</h3>
+      <p>This is a solo event — no team entries. Every participant competes on their own skill and creativity.</p>
+    </div>
+    <div class="elig-card glass reveal">
+      <span class="icon">🎓</span>
+      <h3>All Students Welcome</h3>
+      <p>Open to students of any year and branch. Whether you're a first-year or final-year, all are invited.</p>
+    </div>
+    <div class="elig-card glass reveal">
+      <span class="icon">💻</span>
+      <h3>Bring Your Own Laptop</h3>
+      <p>Participants must bring their own device. No systems will be provided at the venue.</p>
+    </div>
+    <div class="elig-card glass reveal">
+      <span class="icon">🌐</span>
+      <h3>Browser &amp; Editor Ready</h3>
+      <p>Have your preferred code editor and a modern browser (Chrome, Firefox, Edge) installed and ready.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── FORMAT ── -->
+<section id="format">
+  <div class="centered reveal">
+    <p class="section-eyebrow">// how it works</p>
+    <h2 class="section-title">Event <span>Format</span></h2>
+    <p class="section-desc">Two intense rounds of design replication — only the sharpest coders advance.</p>
+  </div>
+  <div class="rounds">
+    <div class="round-card glass reveal">
+      <div class="round-badge">Round 1 · Qualification</div>
+      <div class="round-num">01</div>
+      <div class="round-title">The Qualifier</div>
+      <div class="round-details">
+        <div class="round-detail"><span>⏱️</span><span><strong>45 Minutes</strong> — Tight window, pure pressure</span></div>
+        <div class="round-detail"><span>🎯</span><span><strong>3 Design Challenges</strong> — Each harder than the last</span></div>
+        <div class="round-detail"><span>📋</span><span><strong>Qualification Round</strong> — Top performers advance</span></div>
+        <div class="round-detail"><span>🏆</span><span>Recreate pixel-perfect layouts using only HTML &amp; CSS</span></div>
+      </div>
+    </div>
+    <div class="round-card glass reveal">
+      <div class="round-badge">Round 2 · Final</div>
+      <div class="round-num">02</div>
+      <div class="round-title">The Final Showdown</div>
+      <div class="round-details">
+        <div class="round-detail"><span>⏱️</span><span><strong>45 Minutes</strong> — One shot at glory</span></div>
+        <div class="round-detail"><span>🎯</span><span><strong>Advanced Design Challenge</strong> — Complex &amp; multi-layered</span></div>
+        <div class="round-detail"><span>🔥</span><span><strong>Final Round</strong> — Only finalists compete</span></div>
+        <div class="round-detail"><span>🏆</span><span>Winners decided by score, precision, and speed</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TECH ── -->
+<section id="tech">
+  <div class="reveal">
+    <p class="section-eyebrow">// tools of the trade</p>
+    <h2 class="section-title">Allowed &amp; <span>Restricted</span> Technologies</h2>
+    <p class="section-desc">Keep it pure. The challenge is raw CSS mastery — no shortcuts, no frameworks.</p>
+  </div>
+  <div class="tech-wrap">
+    <div class="reveal">
+      <h3><span class="dot dot-green"></span> Allowed Technologies</h3>
+      <div class="tech-chips">
+        <div class="tech-chip chip-allow"><span class="chip-icon">✅</span> HTML5</div>
+        <div class="tech-chip chip-allow"><span class="chip-icon">✅</span> CSS3</div>
+        <div class="tech-chip chip-allow"><span class="chip-icon">✅</span> VS Code</div>
+        <div class="tech-chip chip-allow"><span class="chip-icon">✅</span> Sublime Text</div>
+        <div class="tech-chip chip-allow"><span class="chip-icon">✅</span> WebStorm</div>
+      </div>
+    </div>
+    <div class="reveal">
+      <h3><span class="dot dot-red"></span> Restricted Technologies</h3>
+      <div class="tech-chips">
+        <div class="tech-chip chip-deny"><span class="chip-icon">🚫</span> JavaScript</div>
+        <div class="tech-chip chip-deny"><span class="chip-icon">🚫</span> React</div>
+        <div class="tech-chip chip-deny"><span class="chip-icon">🚫</span> Vue</div>
+        <div class="tech-chip chip-deny"><span class="chip-icon">🚫</span> Angular</div>
+        <div class="tech-chip chip-deny"><span class="chip-icon">🚫</span> Bootstrap</div>
+        <div class="tech-chip chip-deny"><span class="chip-icon">🚫</span> Tailwind CSS</div>
+        <div class="tech-chip chip-deny"><span class="chip-icon">🚫</span> Material UI</div>
+        <div class="tech-chip chip-deny"><span class="chip-icon">🚫</span> AI Assistants</div>
+        <div class="tech-chip chip-deny"><span class="chip-icon">🚫</span> External Libraries</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── JUDGING ── -->
+<section id="judging">
+  <div class="centered reveal">
+    <p class="section-eyebrow">// scoring system</p>
+    <h2 class="section-title">Judging <span>Criteria</span></h2>
+    <p class="section-desc">Three dimensions determine your score. Precision wins, brevity earns bonus, and speed seals the deal.</p>
+  </div>
+  <div class="judging-grid">
+    <div class="judge-card glass reveal">
+      <div class="judge-pct c1">60%</div>
+      <div class="judge-title">Visual Similarity</div>
+      <div class="judge-desc">How closely your output matches the target design — pixel by pixel, color by color.</div>
+      <div class="progress-bar"><div class="progress-fill fill1" style="width:60%"></div></div>
+    </div>
+    <div class="judge-card glass reveal">
+      <div class="judge-pct c2">25%</div>
+      <div class="judge-title">Code Length</div>
+      <div class="judge-desc">Leaner code scores higher. The elegance of your solution matters as much as correctness.</div>
+      <div class="progress-bar"><div class="progress-fill fill2" style="width:25%"></div></div>
+    </div>
+    <div class="judge-card glass reveal">
+      <div class="judge-pct c3">15%</div>
+      <div class="judge-title">Submission Speed</div>
+      <div class="judge-desc">Faster submissions earn extra points. Quality first — but swift wins break ties.</div>
+      <div class="progress-bar"><div class="progress-fill fill3" style="width:15%"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TIMELINE ── -->
+<section id="timeline">
+  <div class="centered reveal">
+    <p class="section-eyebrow">// schedule</p>
+    <h2 class="section-title">Event <span>Timeline</span></h2>
+    <p class="section-desc">Here's how the day unfolds — stay sharp, every minute counts.</p>
+  </div>
+  <div class="timeline">
+    <div class="tl-item reveal">
+      <div class="tl-content">
+        <div class="tl-time">10:00 AM</div>
+        <div class="tl-event">Event Briefing</div>
+        <div class="tl-note">Rules, scoring criteria, and Q&A with organizers.</div>
+      </div>
+      <div class="tl-dot"></div>
+      <div class="tl-content"></div>
+    </div>
+    <div class="tl-item reveal">
+      <div class="tl-content"></div>
+      <div class="tl-dot" style="background:var(--purple);box-shadow:0 0 10px var(--purple)"></div>
+      <div class="tl-content">
+        <div class="tl-time">10:05 AM</div>
+        <div class="tl-event">Challenge Release</div>
+        <div class="tl-note">Round 1 designs are revealed. Your clock starts now.</div>
+      </div>
+    </div>
+    <div class="tl-item reveal">
+      <div class="tl-content">
+        <div class="tl-time">10:05 – 10:50</div>
+        <div class="tl-event">Round 1 — Live Competition</div>
+        <div class="tl-note">45 minutes to tackle 3 design challenges. No JS, no excuses.</div>
+      </div>
+      <div class="tl-dot"></div>
+      <div class="tl-content"></div>
+    </div>
+    <div class="tl-item reveal">
+      <div class="tl-content"></div>
+      <div class="tl-dot" style="background:#FFB547;box-shadow:0 0 10px #FFB547"></div>
+      <div class="tl-content">
+        <div class="tl-time">10:50 AM</div>
+        <div class="tl-event">Submission Deadline</div>
+        <div class="tl-note">All Round 1 entries must be submitted. Late entries are not accepted.</div>
+      </div>
+    </div>
+    <div class="tl-item reveal">
+      <div class="tl-content">
+        <div class="tl-time">11:15 AM</div>
+        <div class="tl-event">Finalists Announced</div>
+        <div class="tl-note">Top scorers from Round 1 are called to the Final Round.</div>
+      </div>
+      <div class="tl-dot"></div>
+      <div class="tl-content"></div>
+    </div>
+    <div class="tl-item reveal">
+      <div class="tl-content"></div>
+      <div class="tl-dot" style="background:var(--purple);box-shadow:0 0 10px var(--purple)"></div>
+      <div class="tl-content">
+        <div class="tl-time">11:20 AM</div>
+        <div class="tl-event">Final Round Begins</div>
+        <div class="tl-note">One advanced challenge. 45 minutes. No second chances.</div>
+      </div>
+    </div>
+    <div class="tl-item reveal">
+      <div class="tl-content">
+        <div class="tl-time">12:30 PM</div>
+        <div class="tl-event">Winners Announcement 🏆</div>
+        <div class="tl-note">Prize distribution, certificates, and glory for the top 3.</div>
+      </div>
+      <div class="tl-dot" style="background:var(--green);box-shadow:0 0 12px var(--green)"></div>
+      <div class="tl-content"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PRIZES ── -->
+<section id="prizes">
+  <div class="centered reveal">
+    <p class="section-eyebrow">// rewards</p>
+    <h2 class="section-title">Prize <span>Pool</span></h2>
+    <p class="section-desc">Compete for glory, recognition, and rewards worth fighting for.</p>
+  </div>
+  <div class="prizes-grid">
+    <div class="prize-card glass gold reveal">
+      <span class="prize-medal">🥇</span>
+      <div class="prize-rank">1st Place</div>
+      <div class="prize-title">Winner</div>
+      <div class="prize-amount">Cash Prize</div>
+      <div class="prize-note">Trophy + Certificate + Goodies + College Recognition</div>
+    </div>
+    <div class="prize-card glass silver reveal">
+      <span class="prize-medal">🥈</span>
+      <div class="prize-rank">2nd Place</div>
+      <div class="prize-title">Runner Up</div>
+      <div class="prize-amount">Cash Prize</div>
+      <div class="prize-note">Certificate + Goodies + Letter of Appreciation</div>
+    </div>
+    <div class="prize-card glass bronze reveal">
+      <span class="prize-medal">🥉</span>
+      <div class="prize-rank">3rd Place</div>
+      <div class="prize-title">Second Runner Up</div>
+      <div class="prize-amount">Cash Prize</div>
+      <div class="prize-note">Certificate + Goodies + Recognition</div>
+    </div>
+    <div class="prize-card glass cert reveal">
+      <span class="prize-medal">🎖️</span>
+      <div class="prize-rank">All Finalists</div>
+      <div class="prize-title">Certificate</div>
+      <div class="prize-amount">Participation</div>
+      <div class="prize-note">All finalists who qualify for Round 2 receive a Finalists Certificate.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FAQ ── -->
+<section id="faq">
+  <div class="centered reveal">
+    <p class="section-eyebrow">// common questions</p>
+    <h2 class="section-title">Frequently Asked <span>Questions</span></h2>
+  </div>
+  <div class="faq-list" id="faqList">
+    <div class="faq-item">
+      <button class="faq-q">What exactly is a CSS Battle?</button>
+      <div class="faq-a">A CSS Battle is a competition where participants are shown a target design image and must recreate it as accurately as possible using only HTML and CSS — without any JavaScript or external libraries. Scores are based on how closely the output resembles the target, how short the code is, and how quickly it's submitted.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">Do I need prior event registration?</button>
+      <div class="faq-a">Yes. You must register in advance to participate. Walk-ins may not be accommodated. Registration details are available in the Contact section below.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">Can I use CSS preprocessors like SCSS or LESS?</button>
+      <div class="faq-a">No. Only vanilla CSS3 is allowed. No preprocessors, post-processors, or any CSS framework is permitted. The entire submission must be plain HTML and CSS.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">What browser will be used for judging?</button>
+      <div class="faq-a">Submissions will be evaluated in the latest stable version of Google Chrome. Make sure your CSS is compatible and renders correctly in Chrome before submitting.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">Is internet access allowed during the competition?</button>
+      <div class="faq-a">No. Internet access will not be permitted during the competition. Participants must rely solely on their own knowledge and locally installed tools.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">How is code length measured?</button>
+      <div class="faq-a">Code length is counted as the total number of characters in your HTML + CSS files. Whitespace, comments, and redundant code all add to your character count — so keep it lean and precise.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">Can I participate from outside the college?</button>
+      <div class="faq-a">TECHMATE 2026 is primarily open to students of the hosting institution. However, please contact the organizers directly to confirm eligibility for students from other colleges.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTACT ── -->
+<section id="contact">
+  <div class="centered reveal">
+    <p class="section-eyebrow">// reach out</p>
+    <h2 class="section-title">Contact the <span>Organizers</span></h2>
+    <p class="section-desc">Have a question or want to register? Get in touch with the event team.</p>
+  </div>
+  <div class="contact-grid">
+    <div class="contact-card glass reveal">
+      <span class="contact-icon">👤</span>
+      <div class="contact-label">Lead Organizer</div>
+      <div class="contact-val">Event Coordinator</div>
+    </div>
+    <div class="contact-card glass reveal">
+      <span class="contact-icon">📧</span>
+      <div class="contact-label">Email</div>
+      <div class="contact-val"><a href="mailto:techmate2026@college.edu">techmate2026@college.edu</a></div>
+    </div>
+    <div class="contact-card glass reveal">
+      <span class="contact-icon">📞</span>
+      <div class="contact-label">Phone</div>
+      <div class="contact-val"><a href="tel:+910000000000">+91 00000 00000</a></div>
+    </div>
+    <div class="contact-card glass reveal">
+      <span class="contact-icon">🏛️</span>
+      <div class="contact-label">Hosted By</div>
+      <div class="contact-val">Your College Name</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-logo">⚡ TECHMATE 2026</div>
+  <p class="footer-tagline">Code Smart. Build Fast. Battle with CSS.</p>
+  <div class="social-links">
+    <a href="#" class="social-link" aria-label="Instagram">📸</a>
+    <a href="#" class="social-link" aria-label="Twitter/X">🐦</a>
+    <a href="#" class="social-link" aria-label="LinkedIn">💼</a>
+    <a href="#" class="social-link" aria-label="GitHub">🐙</a>
+    <a href="#" class="social-link" aria-label="WhatsApp">💬</a>
+  </div>
+  <p class="footer-copy">© 2026 TECHMATE · All rights reserved · Built with pure HTML &amp; CSS ❤️</p>
+</footer>
+
+<script>
+  // ── COUNTDOWN ──
+  const eventDate = new Date('2026-09-15T10:00:00');
+  function updateCountdown() {
+    const now = new Date();
+    const diff = eventDate - now;
+    if (diff <= 0) {
+      document.getElementById('countdown').innerHTML = '<div style="color:var(--cyan);font-family:JetBrains Mono,monospace;font-size:1.3rem;font-weight:700;letter-spacing:.08em">🎉 Event is LIVE!</div>';
+      return;
+    }
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor((diff % 86400000) / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+    document.getElementById('cd-days').textContent = String(d).padStart(2,'0');
+    document.getElementById('cd-hrs').textContent  = String(h).padStart(2,'0');
+    document.getElementById('cd-min').textContent  = String(m).padStart(2,'0');
+    document.getElementById('cd-sec').textContent  = String(s).padStart(2,'0');
+  }
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+
+  // ── FLOATING CODE ──
+  const snippets = [
+    'display: grid;', 'border-radius: 50%;', 'transform: rotate(45deg);',
+    ':root { --cyan: #00E5FF; }', 'flex-direction: column;', 'box-shadow: 0 0 20px rgba(0,229,255,.4);',
+    'background: linear-gradient(135deg, #00E5FF, #7B61FF);', 'position: absolute;',
+    'transition: all .3s ease;', '@keyframes pulse { }', 'clip-path: polygon(50% 0%, 100% 100%, 0% 100%);',
+    'animation: float 3s infinite;', 'backdrop-filter: blur(10px);', 'grid-template-columns: repeat(3,1fr);',
+    'margin: 0 auto;', 'overflow: hidden;', 'z-index: 999;', 'color: var(--cyan);',
+    ':hover { transform: translateY(-4px); }', 'font-family: JetBrains Mono, monospace;'
+  ];
+  const fc = document.getElementById('floatingCode');
+  function spawnLine() {
+    const el = document.createElement('div');
+    el.className = 'code-line';
+    el.textContent = snippets[Math.floor(Math.random() * snippets.length)];
+    el.style.left = Math.random() * 95 + '%';
+    const dur = 8 + Math.random() * 10;
+    el.style.animationDuration = dur + 's';
+    el.style.animationDelay = '0s';
+    fc.appendChild(el);
+    setTimeout(() => el.remove(), dur * 1000 + 500);
+  }
+  setInterval(spawnLine, 600);
+  for (let i = 0; i < 12; i++) setTimeout(spawnLine, i * 200);
+
+  // ── FAQ ACCORDION ──
+  document.querySelectorAll('.faq-q').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.closest('.faq-item');
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    });
+  });
+
+  // ── SCROLL REVEAL ──
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

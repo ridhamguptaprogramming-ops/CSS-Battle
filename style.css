@@ -1,0 +1,128 @@
+/*
+  CSS Battle - style.css (scaffold)
+  - No frameworks, no external libraries.
+  - No JavaScript.
+
+  Customize this file to match each target design.
+*/
+
+:root {
+  --bg: #ffffff;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+  margin: 0;
+  background: var(--bg);
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
+
+/*
+  Baseline "target" area.
+  CSS Battle entries typically consist of nested HTML + CSS shapes.
+*/
+.stage {
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+/* Demo target (safe default). Replace markup in index.html for other targets. */
+.target {
+  width: min(520px, 92vw);
+  aspect-ratio: 1 / 1;
+  position: relative;
+  background: #f7f8fb;
+  border-radius: 22px;
+  box-shadow:
+    0 20px 60px rgba(18, 30, 55, 0.10),
+    inset 0 0 0 2px rgba(18, 30, 55, 0.06);
+}
+
+/* Top banner */
+.target::before {
+  content: '';
+  position: absolute;
+  left: 8.5%;
+  right: 8.5%;
+  top: 8.5%;
+  height: 16%;
+  background: linear-gradient(90deg, #6d5efc, #2bb3ff);
+  border-radius: 16px;
+}
+
+/* Center circle */
+.target .orb {
+  position: absolute;
+  left: 50%;
+  top: 54%;
+  width: 42%;
+  aspect-ratio: 1 / 1;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle at 30% 30%, #ffffff, #bfe7ff 28%, #3a86ff 55%, #1143a6 100%);
+  border-radius: 999px;
+  box-shadow:
+    0 18px 45px rgba(23, 77, 175, 0.25),
+    inset 0 0 0 2px rgba(255, 255, 255, 0.35);
+}
+
+/* Orb highlight */
+.target .orb::after {
+  content: '';
+  position: absolute;
+  inset: 18% 18% auto auto;
+  width: 34%;
+  height: 34%;
+  background: radial-gradient(circle, rgba(255,255,255,0.95), rgba(255,255,255,0));
+  border-radius: 999px;
+  transform: rotate(-18deg);
+}
+
+/* Bottom controls */
+.target .bar {
+  position: absolute;
+  left: 12%;
+  right: 12%;
+  bottom: 11%;
+  height: 12%;
+  background: #ffffff;
+  border-radius: 999px;
+  box-shadow: inset 0 0 0 2px rgba(18, 30, 55, 0.08);
+}
+
+/* Small knobs */
+.target .knob {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 14%;
+  height: 56%;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #ffffff, #eaf0ff);
+  box-shadow: inset 0 0 0 2px rgba(18, 30, 55, 0.10);
+}
+
+.target .knob.one { left: 18%; }
+.target .knob.two { left: 43%; }
+.target .knob.three { left: 68%; }
+
+/* Center caption (optional) */
+.target .caption {
+  position: absolute;
+  left: 50%;
+  top: 78%;
+  transform: translate(-50%, 0);
+  font-size: clamp(12px, 2.3vw, 16px);
+  color: rgba(18, 30, 55, 0.75);
+  letter-spacing: 0.02em;
+  user-select: none;
+}
+
+/* Utility: hide any default focus outlines for non-interactive demo */
+:focus { outline: none; }
+
+
