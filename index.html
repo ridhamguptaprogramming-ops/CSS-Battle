@@ -56,7 +56,7 @@
     font-family: 'JetBrains Mono', monospace;
     font-size: 1.1rem; font-weight: 700;
     background: linear-gradient(90deg, var(--cyan), var(--purple));
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
   }
   .nav-links { display: flex; gap: 2rem; list-style: none; }
   .nav-links a {
@@ -136,6 +136,7 @@
     font-weight: 700; line-height: 1;
     letter-spacing: -.02em;
     background: linear-gradient(135deg, #fff 0%, var(--cyan) 45%, var(--purple) 100%);
+    background-clip: text;
     -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     animation: titleReveal .8s ease both;
   }
@@ -197,6 +198,7 @@
     font-family: 'JetBrains Mono', monospace;
     font-size: 2.2rem; font-weight: 700;
     background: linear-gradient(135deg, var(--cyan), var(--purple));
+    background-clip: text;
     -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     line-height: 1;
   }
@@ -215,6 +217,7 @@
   }
   .section-title span {
     background: linear-gradient(90deg, var(--cyan), var(--purple));
+    background-clip: text;
     -webkit-background-clip: text; -webkit-text-fill-color: transparent;
   }
   .section-desc { color: var(--muted); max-width: 620px; font-size: 1.05rem; }
@@ -306,7 +309,7 @@
     font-family: 'JetBrains Mono', monospace;
     font-size: 3.5rem; font-weight: 700; line-height: 1;
     background: linear-gradient(135deg, var(--cyan), var(--purple));
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     margin-bottom: .5rem;
   }
   .round-title { font-size: 1.25rem; font-weight: 600; margin-bottom: 1.5rem; }
@@ -409,7 +412,7 @@
     font-family: 'JetBrains Mono', monospace;
     font-size: 1.5rem; font-weight: 700;
     background: linear-gradient(90deg, var(--cyan), var(--purple));
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     margin-bottom: .5rem;
   }
   .prize-note { font-size: .82rem; color: var(--muted); }
@@ -457,7 +460,7 @@
   .footer-logo {
     font-family: 'JetBrains Mono', monospace; font-size: 1.5rem; font-weight: 700;
     background: linear-gradient(90deg, var(--cyan), var(--purple));
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     margin-bottom: .5rem;
   }
   .footer-tagline { color: var(--muted); font-size: .875rem; margin-bottom: 2rem; }
@@ -689,7 +692,7 @@
     <li><a href="#timeline">Timeline</a></li>
     <li><a href="#prizes">Prizes</a></li>
     <li><a href="#faq">FAQ</a></li>
-    <li><a href="#register" class="nav-cta">Register</a></li>
+    <li><a href="./register.html" class="nav-cta">Register</a></li>
   </ul>
   <div class="hamburger" id="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')">
     <span></span><span></span><span></span>
@@ -709,7 +712,7 @@
     <p class="hero-tagline"><span>Code Smart.</span> Build Fast. <span>Battle with CSS.</span></p>
 
     <div class="hero-btns">
-      <a href="#contact" class="btn-primary">🚀 Register Now</a>
+      <a href="./register.html" class="btn-primary">🚀 Register Now</a>
       <a href="#about" class="btn-secondary">Learn More →</a>
     </div>
 
@@ -1287,6 +1290,77 @@
       if (!isOpen) item.classList.add('open');
     });
   });
+
+  // ── REGISTER FORM (front-end validation) ──
+  const registerForm = document.getElementById('registerForm');
+  if (registerForm) {
+    const statusEl = document.getElementById('formStatus');
+    const consentEl = document.getElementById('consent');
+    const consentErrorEl = document.getElementById('consentError');
+
+    function setInvalid(fieldEl, isInvalid, errorMsg) {
+      if (!fieldEl) return;
+      const fieldWrap = fieldEl.closest('.field');
+      if (!fieldWrap) return;
+      fieldWrap.classList.toggle('invalid', !!isInvalid);
+      const err = fieldWrap.querySelector('.error');
+      if (err) err.textContent = errorMsg;
+    }
+
+    function isEmailLike(v) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+    }
+
+    function isPhoneLike(v) {
+      // Simple check for Indian-style numbers; allows + and digits
+      return /^[+]?\d{10,14}$/.test(v.replace(/\s/g, ''));
+    }
+
+    registerForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      statusEl.classList.remove('show', 'ok', 'bad');
+      statusEl.textContent = '';
+
+      let ok = true;
+
+      const fullName = document.getElementById('fullName');
+      const collegeName = document.getElementById('collegeName');
+      const email = document.getElementById('email');
+      const phone = document.getElementById('phone');
+      const department = document.getElementById('department');
+      const year = document.getElementById('year');
+      const consent = consentEl.checked;
+
+      // Reset invalid state
+      [fullName, collegeName, email, phone, department, year].forEach(inp => {
+        const wrap = inp.closest('.field');
+        if (wrap) wrap.classList.remove('invalid');
+      });
+      consentErrorEl.style.display = 'none';
+
+      if (!fullName.value.trim()) { ok = false; setInvalid(fullName, true, 'Please enter your name.'); }
+      if (!collegeName.value.trim()) { ok = false; setInvalid(collegeName, true, 'Please enter your college name.'); }
+      if (!email.value.trim() || !isEmailLike(email.value.trim())) { ok = false; setInvalid(email, true, 'Enter a valid email.'); }
+      if (!phone.value.trim() || !isPhoneLike(phone.value.trim())) { ok = false; setInvalid(phone, true, 'Enter a valid phone number.'); }
+      if (!department.value.trim()) { ok = false; setInvalid(department, true, 'Please enter your department.'); }
+      if (!year.value) { ok = false; setInvalid(year, true, 'Please select your year.'); }
+
+      if (!consent) {
+        ok = false;
+        consentErrorEl.style.display = 'block';
+      }
+
+      if (!ok) {
+        statusEl.classList.add('show', 'bad');
+        statusEl.textContent = 'Fix the highlighted fields and try again.';
+        return;
+      }
+
+      statusEl.classList.add('show', 'ok');
+      statusEl.textContent = 'Registration submitted! ✅ (Demo only — no server connected.)';
+      registerForm.reset();
+    });
+  }
 
   // ── SCROLL REVEAL ──
   const observer = new IntersectionObserver(entries => {

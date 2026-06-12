@@ -1,0 +1,13 @@
+[
+  {
+    "fullName": "Test User",
+    "collegeName": "ABC College",
+    "email": "test@example.com",
+    "phone": "1234567890",
+    "department": "CSE",
+    "year": "1",
+    "handle": null,
+    "consent": true,
+    "submittedAt": "2026-06-12T17:37:11.732Z"
+  }
+]

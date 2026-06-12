@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TECHMATE 2026 | Register</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css" />
+  <style>
+    /* If style.css is not tailored for register-only page, keep critical layout here.
+       This page reuses the same design language. */
+    #register-page { padding: 7rem 5% 4rem; max-width: 980px; margin: 0 auto; }
+    .glass { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.10); border-radius: 16px; backdrop-filter: blur(10px); }
+    .register-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; align-items: start; }
+    .register-card { padding: 2.2rem; }
+    .form-title { font-size: 1.2rem; font-weight: 700; margin-bottom: .8rem; }
+    .form-sub { color: rgba(255,255,255,.55); font-size: .92rem; margin-bottom: 1.5rem; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .field { display: flex; flex-direction: column; gap: .45rem; }
+    .field.wide { grid-column: 1 / -1; }
+    label { font-size: .8rem; color: rgba(255,255,255,.55); text-transform: uppercase; letter-spacing: .08em; }
+    input, select { width: 100%; padding: .9rem .95rem; border-radius: 10px; border: 1px solid rgba(255,255,255,.14); background: rgba(0,0,0,.25); color: #fff; outline: none; }
+    input::placeholder { color: rgba(255,255,255,.35); }
+    input:focus, select:focus { border-color: rgba(0,229,255,.45); box-shadow: 0 0 30px rgba(0,229,255,.35); }
+    .hint { color: rgba(255,255,255,.42); font-size: .82rem; }
+    .error { color: rgba(255,77,109,.95); font-size: .86rem; display: none; }
+    .field.invalid .error { display: block; }
+    .field.invalid input, .field.invalid select { border-color: rgba(255,77,109,.55); box-shadow: 0 0 0 3px rgba(255,77,109,.12); }
+    .consent { display: flex; gap: .75rem; align-items: flex-start; margin-top: 1.2rem; padding: 1rem 1rem; border-radius: 12px; border: 1px solid rgba(255,255,255,.12); background: rgba(0,0,0,.18); }
+    .consent input { width: 18px; height: 18px; margin-top: 2px; }
+    .consent p { color: rgba(255,255,255,.55); font-size: .9rem; }
+    .form-actions { margin-top: 1.4rem; display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+    .btn-submit { padding: .95rem 2.2rem; border-radius: 10px; border: none; cursor: pointer; background: linear-gradient(135deg, #00E5FF, #7B61FF); color: #000; font-family: 'Space Grotesk', sans-serif; font-size: 1rem; font-weight: 800; }
+    .status { flex: 1; min-width: 240px; padding: .9rem 1rem; border-radius: 12px; border: 1px solid rgba(255,255,255,.12); background: rgba(0,0,0,.18); color: rgba(255,255,255,.55); display: none; }
+    .status.show { display: block; }
+    .status.ok { color: rgba(0,255,157,.95); border-color: rgba(0,255,157,.35); box-shadow: 0 0 0 3px rgba(0,255,157,.10); }
+    .status.bad { color: rgba(255,77,109,.95); border-color: rgba(255,77,109,.35); box-shadow: 0 0 0 3px rgba(255,77,109,.10); }
+    @media (max-width: 900px) { .form-grid { grid-template-columns: 1fr; } }
+    a.back { display:inline-block; margin-top: 1rem; color: #00E5FF; text-decoration: none; font-family: 'JetBrains Mono', monospace; }
+  </style>
+</head>
+<body>
+  <nav style="position: fixed; top: 0; left: 0; right: 0; z-index: 1000; padding: 1rem 5%; background: rgba(11,15,25,0.85); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(255,255,255,0.10); display:flex; align-items:center; justify-content:space-between;">
+    <div class="nav-logo" style="font-family: 'JetBrains Mono', monospace; font-size: 1.1rem; font-weight: 700; background: linear-gradient(90deg, #00E5FF, #7B61FF); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;">⚡ TECHMATE</div>
+    <a class="nav-cta" href="./index.html#register" style="padding:.5rem 1.25rem; border-radius: 6px; background: linear-gradient(135deg, #00E5FF, #7B61FF); color:#000; font-weight:700; text-decoration:none; font-size:.8rem; text-transform:uppercase; letter-spacing:.05em;">← Back to Home</a>
+  </nav>
+
+  <section id="register-page">
+    <div class="glass register-card" style="margin-top: 2rem;">
+      <div class="form-title">Participant Details</div>
+      <div class="form-sub">Register for TECHMATE 2026 · CSS Battle. This page submits to a Node/Express backend.</div>
+
+      <form id="registerForm" novalidate>
+        <div class="form-grid">
+          <div class="field" id="fNameField">
+            <label for="fullName">Full Name *</label>
+            <input id="fullName" name="fullName" type="text" placeholder="Your name" autocomplete="name" required />
+            <div class="error">Please enter your name.</div>
+          </div>
+
+          <div class="field" id="collegeField">
+            <label for="collegeName">College Name *</label>
+            <input id="collegeName" name="collegeName" type="text" placeholder="Your college" autocomplete="organization" required />
+            <div class="error">Please enter your college name.</div>
+          </div>
+
+          <div class="field" id="emailField">
+            <label for="email">Email *</label>
+            <input id="email" name="email" type="email" placeholder="name@example.com" autocomplete="email" required />
+            <div class="error">Enter a valid email.</div>
+          </div>
+
+          <div class="field" id="phoneField">
+            <label for="phone">Phone *</label>
+            <input id="phone" name="phone" type="tel" placeholder="+91XXXXXXXXXX" inputmode="tel" required />
+            <div class="error">Enter a valid phone number.</div>
+          </div>
+
+          <div class="field wide" id="deptField">
+            <label for="department">Department *</label>
+            <input id="department" name="department" type="text" placeholder="CSE / ECE / IT / Other" required />
+            <div class="error">Please enter your department.</div>
+          </div>
+
+          <div class="field" id="yearField">
+            <label for="year">Year *</label>
+            <select id="year" name="year" required>
+              <option value="" selected disabled>Select year</option>
+              <option value="1">1st Year</option>
+              <option value="2">2nd Year</option>
+              <option value="3">3rd Year</option>
+              <option value="4">4th Year</option>
+              <option value="Other">Other</option>
+            </select>
+            <div class="error">Please select your year.</div>
+          </div>
+
+          <div class="field" id="handleField">
+            <label for="handle">Coding Handle (Optional)</label>
+            <input id="handle" name="handle" type="text" placeholder="GitHub / Codeforces / etc." />
+            <div class="hint">Optional: helps organizers contact you faster.</div>
+          </div>
+        </div>
+
+        <div class="consent">
+          <input id="consent" name="consent" type="checkbox" />
+          <p>
+            I agree to the event rules and confirm that I will follow the competition guidelines during TECHMATE 2026.
+            <span style="display:block;margin-top:.35rem;color:rgba(255,255,255,.45);font-size:.85rem;">*</span>
+          </p>
+        </div>
+        <div class="error" id="consentError" style="margin-top:.7rem;">Please accept the consent to register.</div>
+
+        <div class="form-actions">
+          <button class="btn-submit" type="submit">✅ Submit Registration</button>
+          <div id="formStatus" class="status" role="status" aria-live="polite"></div>
+        </div>
+      </form>
+    </div>
+
+    <a class="back" href="./index.html">← Return to TECHMATE 2026</a>
+  </section>
+
+  <script>
+    const registerForm = document.getElementById('registerForm');
+    const statusEl = document.getElementById('formStatus');
+    const consentEl = document.getElementById('consent');
+    const consentErrorEl = document.getElementById('consentError');
+
+    function setInvalid(inputEl, isInvalid, errorMsg) {
+      if (!inputEl) return;
+      const fieldWrap = inputEl.closest('.field');
+      if (!fieldWrap) return;
+      fieldWrap.classList.toggle('invalid', !!isInvalid);
+      const err = fieldWrap.querySelector('.error');
+      if (err) err.textContent = errorMsg;
+    }
+
+    function isEmailLike(v) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+    }
+
+    function isPhoneLike(v) {
+      return /^[+]?\d{10,14}$/.test(v.replace(/\s/g, ''));
+    }
+
+    registerForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      statusEl.classList.remove('show', 'ok', 'bad');
+      statusEl.textContent = '';
+      consentErrorEl.style.display = 'none';
+
+      const fullName = document.getElementById('fullName');
+      const collegeName = document.getElementById('collegeName');
+      const email = document.getElementById('email');
+      const phone = document.getElementById('phone');
+      const department = document.getElementById('department');
+      const year = document.getElementById('year');
+      const handle = document.getElementById('handle');
+      const consent = consentEl.checked;
+
+      [fullName, collegeName, email, phone, department, year].forEach(inp => {
+        const wrap = inp.closest('.field');
+        if (wrap) wrap.classList.remove('invalid');
+      });
+
+      let ok = true;
+      if (!fullName.value.trim()) { ok = false; setInvalid(fullName, true, 'Please enter your name.'); }
+      if (!collegeName.value.trim()) { ok = false; setInvalid(collegeName, true, 'Please enter your college name.'); }
+      if (!email.value.trim() || !isEmailLike(email.value.trim())) { ok = false; setInvalid(email, true, 'Enter a valid email.'); }
+      if (!phone.value.trim() || !isPhoneLike(phone.value.trim())) { ok = false; setInvalid(phone, true, 'Enter a valid phone number.'); }
+      if (!department.value.trim()) { ok = false; setInvalid(department, true, 'Please enter your department.'); }
+      if (!year.value) { ok = false; setInvalid(year, true, 'Please select your year.'); }
+
+      if (!consent) {
+        ok = false;
+        consentErrorEl.style.display = 'block';
+      }
+
+      if (!ok) {
+        statusEl.classList.add('show', 'bad');
+        statusEl.textContent = 'Fix the highlighted fields and try again.';
+        return;
+      }
+
+      try {
+        const res = await fetch('/api/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            fullName: fullName.value.trim(),
+            collegeName: collegeName.value.trim(),
+            email: email.value.trim(),
+            phone: phone.value.trim(),
+            department: department.value.trim(),
+            year: year.value,
+            handle: handle.value.trim() || null,
+            consent: true
+          })
+        });
+
+        const data = await res.json().catch(() => ({}));
+
+        if (!res.ok || !data.ok) {
+          statusEl.classList.add('show', 'bad');
+          statusEl.textContent = data?.error || 'Registration failed.';
+          return;
+        }
+
+        statusEl.classList.add('show', 'ok');
+        statusEl.textContent = 'Registration submitted! ✅ Saved successfully.';
+        registerForm.reset();
+      } catch (err) {
+        statusEl.classList.add('show', 'bad');
+        statusEl.textContent = 'Network/server error. Try again.';
+        console.error(err);
+      }
+    });
+  </script>
+</body>
+</html>
+
