@@ -1069,6 +1069,123 @@
   </div>
 </section>
 
+<!-- ── REGISTER ── -->
+<section id="register">
+  <div class="centered reveal">
+    <p class="section-eyebrow">// registration</p>
+    <h2 class="section-title">Register <span>Now</span></h2>
+    <p class="section-desc">Fill the form below to confirm your entry for TECHMATE 2026 · CSS Battle.</p>
+  </div>
+
+  <div class="register-wrap">
+    <div class="register-grid">
+      <div class="glass register-card reveal">
+        <div class="form-title">Participant Details</div>
+        <div class="form-sub">This is a front-end demo. On submit, the page will validate and show a confirmation message.</div>
+
+        <form id="registerForm" novalidate>
+          <div class="form-grid">
+            <div class="field" id="fNameField">
+              <label for="fullName">Full Name *</label>
+              <input id="fullName" name="fullName" type="text" placeholder="Your name" autocomplete="name" required />
+              <div class="error">Please enter your name.</div>
+            </div>
+
+            <div class="field" id="collegeField">
+              <label for="collegeName">College Name *</label>
+              <input id="collegeName" name="collegeName" type="text" placeholder="Your college" autocomplete="organization" required />
+              <div class="error">Please enter your college name.</div>
+            </div>
+
+            <div class="field" id="emailField">
+              <label for="email">Email *</label>
+              <input id="email" name="email" type="email" placeholder="name@example.com" autocomplete="email" required />
+              <div class="error">Enter a valid email.</div>
+            </div>
+
+            <div class="field" id="phoneField">
+              <label for="phone">Phone *</label>
+              <input id="phone" name="phone" type="tel" placeholder="+91XXXXXXXXXX" inputmode="tel" required />
+              <div class="error">Enter a valid phone number.</div>
+            </div>
+
+            <div class="field wide" id="deptField">
+              <label for="department">Department *</label>
+              <input id="department" name="department" type="text" placeholder="CSE / ECE / IT / Other" required />
+              <div class="error">Please enter your department.</div>
+            </div>
+
+            <div class="field" id="yearField">
+              <label for="year">Year *</label>
+              <select id="year" name="year" required>
+                <option value="" selected disabled>Select year</option>
+                <option value="1">1st Year</option>
+                <option value="2">2nd Year</option>
+                <option value="3">3rd Year</option>
+                <option value="4">4th Year</option>
+                <option value="Other">Other</option>
+              </select>
+              <div class="error">Please select your year.</div>
+            </div>
+
+            <div class="field" id="handleField">
+              <label for="handle">Coding Handle (Optional)</label>
+              <input id="handle" name="handle" type="text" placeholder="GitHub / Codeforces / etc." />
+              <div class="hint">Optional: helps organizers contact you faster.</div>
+            </div>
+          </div>
+
+          <div class="consent">
+            <input id="consent" name="consent" type="checkbox" />
+            <p>
+              I agree to the event rules and confirm that I will follow the competition guidelines during TECHMATE 2026.
+              <span style="display:block;margin-top:.35rem;color:rgba(255,255,255,.45);font-size:.85rem;">*</span>
+            </p>
+          </div>
+          <div class="error" id="consentError" style="margin-top:.7rem;">Please accept the consent to register.</div>
+
+          <div class="form-actions">
+            <button class="btn-submit" type="submit">✅ Submit Registration</button>
+            <div id="formStatus" class="status" role="status" aria-live="polite"></div>
+          </div>
+        </form>
+      </div>
+
+      <div class="glass register-side reveal">
+        <div class="side-badge">Quick Checklist</div>
+        <div class="side-list">
+          <div class="side-item">
+            <div class="side-ico">🧾</div>
+            <div>
+              <h4>Bring Student ID</h4>
+              <p>Have your ID ready during check-in.</p>
+            </div>
+          </div>
+          <div class="side-item">
+            <div class="side-ico">💻</div>
+            <div>
+              <h4>Own Laptop</h4>
+              <p>Use your device with a modern browser.</p>
+            </div>
+          </div>
+          <div class="side-item">
+            <div class="side-ico">🧠</div>
+            <div>
+              <h4>CSS-Only Mode</h4>
+              <p>Submissions should be pure HTML &amp; CSS (no JS frameworks).</p>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:1.4rem;color:var(--muted);font-size:.9rem;line-height:1.7;">
+          <strong style="color:var(--text);">Note:</strong> This demo stores nothing on a server.
+          Replace the submit handler with your backend endpoint when ready.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ── CONTACT ── -->
 <section id="contact">
   <div class="centered reveal">
